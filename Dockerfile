@@ -4,8 +4,9 @@ ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=12345
 ENV POSTGRES_DB=eventplanner
 
-# OpenShift permission fix
-RUN chown -R 1001:0 /var/lib/postgresql \
+# OpenShift-compatible permissions (NO chown!)
+RUN mkdir -p /var/lib/postgresql/data \
  && chmod -R g+rwX /var/lib/postgresql
 
+# Run as non-root (OpenShift requirement)
 USER 1001
